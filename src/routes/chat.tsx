@@ -44,7 +44,7 @@ function Chat() {
     setInput("");
     setLoading(true);
     setTimeout(() => {
-      setMsgs((m) => [...m, { role: "ai", text: replies[Math.floor(Math.random() * replies.length)] }]);
+      setMsgs((m) => [...m, { role: "ai", text: replies[Math.floor(Math.random() * replies.length)] ?? replies[0]! }]);
       setLoading(false);
     }, 1500);
   };
