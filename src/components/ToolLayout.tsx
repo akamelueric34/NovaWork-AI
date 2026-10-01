@@ -1,6 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Copy, Check, Loader2, Sparkles as _unused } from "lucide-react";
-void _unused;
+import { Copy, Check, Loader2 } from "lucide-react";
 
 export const field =
   "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/30";
