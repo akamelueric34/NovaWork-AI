@@ -47,7 +47,7 @@ function Page() {
         <form className="flex flex-col gap-4" onSubmit={(e) => { e.preventDefault(); g.run(() => mock); }}>
           <div>
             <label className={label}>Raw Transcript</label>
-            <textarea rows={16} required value={text} onChange={(e) => setText(e.target.value)} className={field}
+            <textarea rows={12} required value={text} onChange={(e) => setText(e.target.value)} className={`${field} min-h-56 md:h-[calc(100dvh-18rem)] md:max-h-[34rem]`}
               placeholder="Paste your meeting transcript here..." />
           </div>
           <GenerateButton loading={g.loading}>Extract Action Items</GenerateButton>
