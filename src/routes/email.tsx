@@ -60,7 +60,7 @@ ${sign}
         >
           <div>
             <label className={label}>Email Context</label>
-            <textarea rows={8} required value={context} onChange={(e) => setContext(e.target.value)} className={field}
+            <textarea rows={8} required value={context} onChange={(e) => setContext(e.target.value)} className={`${field} min-h-48 md:h-[calc(100dvh-24rem)] md:min-h-56`}
               placeholder="e.g. Follow up with the client about the delayed Q3 deliverable and propose a new date." />
           </div>
           <div>

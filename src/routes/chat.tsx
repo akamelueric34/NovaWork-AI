@@ -56,15 +56,18 @@ function Chat() {
   };
 
   return (
-    <div className="mx-auto flex h-full max-w-4xl flex-col p-4 sm:p-8">
-      <h1 className="text-2xl font-bold sm:text-3xl">Workplace Chat</h1>
-      <p className="mt-1 text-muted-foreground">Ask anything about your workday.</p>
-      <div className="mt-6 flex min-h-0 flex-1 flex-col rounded-lg border border-border bg-card">
+    <div className="mx-auto flex h-full max-w-6xl flex-col p-4 sm:p-6 lg:p-8">
+      <div className="flex min-w-0 items-center gap-2">
+        <span className="h-2 w-2 shrink-0 rounded-full bg-primary shadow-glow" />
+        <h1 className="truncate text-xl font-bold sm:text-2xl lg:text-3xl">Workplace Chat</h1>
+      </div>
+      <p className="mt-1 text-sm text-muted-foreground sm:text-base">Ask anything about your workday.</p>
+      <div className="mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/80 bg-card/70 shadow-glow backdrop-blur-md lg:mt-6">
         <div className="flex-1 space-y-5 overflow-y-auto p-4 sm:p-6">
           {msgs.map((m, i) =>
             m.role === "user" ? (
               <div key={i} className="flex justify-end">
-                <div className="max-w-[85%] whitespace-pre-wrap rounded-lg rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground">{m.text}</div>
+                <div className="max-w-[88%] whitespace-pre-wrap rounded-xl rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground sm:max-w-[75%]">{m.text}</div>
               </div>
             ) : (
               <div key={i} className="flex gap-3">
@@ -96,9 +99,9 @@ function Chat() {
           )}
           <div ref={end} />
         </div>
-        <div className="flex flex-wrap gap-2 border-t border-border px-3 pt-3">
+        <div className="flex gap-2 overflow-x-auto border-t border-border px-3 pt-3 [scrollbar-width:none]">
           {suggestions.map((suggestion) => (
-            <Button key={suggestion} variant="outline" size="sm" onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}>
+            <Button key={suggestion} variant="outline" size="sm" className="shrink-0" onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}>
               {suggestion}
             </Button>
           ))}
