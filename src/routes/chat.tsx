@@ -8,9 +8,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/chat")({
   head: () => ({
     meta: [
-      { title: "AI Chatbot — NovaWork AI" },
-      { name: "description", content: "Chat with NovaWork AI about any workplace question." },
-      { property: "og:title", content: "AI Chatbot — NovaWork AI" },
+      { title: "Workplace Chat — NovaWork AI" },
+      { name: "description", content: "Get practical guidance for everyday workplace questions." },
+      { property: "og:title", content: "Workplace Chat — NovaWork AI" },
       { property: "og:description", content: "Your on-demand workplace assistant." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -23,7 +23,7 @@ type Msg = { role: "user" | "ai"; text: string };
 
 const replies = [
   "Great question! Here's a practical approach:\n\n1. Clarify the goal and the deadline.\n2. Break the work into small, owned tasks.\n3. Schedule a quick check-in midway.\n\nWant me to draft a message to your team?",
-  "Here are a few tips:\n\n• Block focus time on your calendar.\n• Batch similar tasks together.\n• Use the 2-minute rule for quick items.\n\nShall I build you a daily plan with the Task Planner?",
+  "Here are a few tips:\n\n• Block focus time on your calendar.\n• Batch similar tasks together.\n• Use the 2-minute rule for quick items.\n\nWould you like help turning these into clear next steps?",
   "For difficult conversations, try the SBI model: describe the Situation, the Behavior, and its Impact. Keep it factual and invite their perspective.",
   "I'd suggest keeping it concise: lead with the key point, add one or two supporting details, and close with a clear next step.",
 ];
@@ -57,7 +57,7 @@ function Chat() {
 
   return (
     <div className="mx-auto flex h-full max-w-4xl flex-col p-4 sm:p-8">
-      <h1 className="text-2xl font-bold sm:text-3xl">AI Chatbot</h1>
+      <h1 className="text-2xl font-bold sm:text-3xl">Workplace Chat</h1>
       <p className="mt-1 text-muted-foreground">Ask anything about your workday.</p>
       <div className="mt-6 flex min-h-0 flex-1 flex-col rounded-lg border border-border bg-card">
         <div className="flex-1 space-y-5 overflow-y-auto p-4 sm:p-6">
