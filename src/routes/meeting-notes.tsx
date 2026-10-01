@@ -9,6 +9,8 @@ export const Route = createFileRoute("/meeting-notes")({
       { name: "description", content: "Turn raw meeting transcripts into key decisions and action items." },
       { property: "og:title", content: "Meeting Notes Summarizer — NovaWork AI" },
       { property: "og:description", content: "Transcripts to decisions and action items." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Page,
@@ -48,7 +50,7 @@ function Page() {
             <textarea rows={16} required value={text} onChange={(e) => setText(e.target.value)} className={field}
               placeholder="Paste your meeting transcript here..." />
           </div>
-          <GenerateButton loading={g.loading} />
+          <GenerateButton loading={g.loading}>Extract Action Items</GenerateButton>
         </form>
       }
     />

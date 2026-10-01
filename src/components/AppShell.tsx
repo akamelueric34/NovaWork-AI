@@ -3,6 +3,7 @@ import { useState, type ReactNode } from "react";
 import {
   LayoutDashboard, Mail, NotebookPen, CalendarCheck, Search, MessageSquare, Menu, X, Zap,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const tools = [
   { to: "/email", label: "Smart Email Generator", short: "Email", icon: Mail, desc: "Draft polished workplace emails in any tone." },
@@ -18,22 +19,22 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex h-dvh flex-col">
-      <div className="shrink-0 border-b border-border bg-warning px-4 py-2 text-center text-xs font-medium text-warning-foreground sm:text-sm">
+      <div className="shrink-0 border-b border-border bg-warning px-4 py-2 text-center text-xs font-medium text-warning-foreground">
         ⚠️ Responsible AI Guardrail: AI outputs are suggestions and require human review.
       </div>
       <div className="flex min-h-0 flex-1">
         {open && <div className="fixed inset-0 z-30 bg-background/70 md:hidden" onClick={() => setOpen(false)} />}
         <aside
-          className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-sidebar-border bg-sidebar p-4 transition-transform md:static md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
+          className={`fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-sidebar-border bg-sidebar p-4 transition-transform md:static md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
         >
           <div className="mb-8 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand text-primary-foreground shadow-glow">
+              <span className="grid h-8 w-8 place-items-center rounded-md bg-brand text-primary-foreground shadow-glow">
                 <Zap className="h-5 w-5" />
               </span>
-              <span className="font-display text-lg font-bold">NovaWork <span className="text-brand">AI</span></span>
+              <span className="font-display text-base font-bold">NovaWork <span className="text-primary">AI</span></span>
             </Link>
-            <button className="md:hidden" onClick={() => setOpen(false)} aria-label="Close menu"><X className="h-5 w-5" /></button>
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen(false)} aria-label="Close menu"><X /></Button>
           </div>
           <nav className="flex flex-col gap-1">
             {nav.map((n) => (
@@ -42,7 +43,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 to={n.to}
                 onClick={() => setOpen(false)}
                 activeOptions={{ exact: true }}
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
+                className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
                 activeProps={{ className: "bg-sidebar-accent !text-primary font-semibold" }}
               >
                 <n.icon className="h-4 w-4 shrink-0" />
@@ -54,8 +55,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         </aside>
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex items-center gap-3 border-b border-border px-4 py-3 md:hidden">
-            <button onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-5 w-5" /></button>
-            <span className="font-display font-bold">NovaWork <span className="text-brand">AI</span></span>
+            <Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Open menu"><Menu /></Button>
+            <span className="font-display font-bold">NovaWork <span className="text-primary">AI</span></span>
           </header>
           <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
         </div>

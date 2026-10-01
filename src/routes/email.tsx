@@ -9,6 +9,8 @@ export const Route = createFileRoute("/email")({
       { name: "description", content: "Generate polished workplace emails in a formal, friendly or persuasive tone." },
       { property: "og:title", content: "Smart Email Generator — NovaWork AI" },
       { property: "og:description", content: "Generate polished workplace emails in seconds." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: EmailPage,
@@ -69,7 +71,7 @@ ${sign}
               <option>Persuasive</option>
             </select>
           </div>
-          <GenerateButton loading={g.loading} />
+          <GenerateButton loading={g.loading}>Generate Professional Draft</GenerateButton>
         </form>
       }
     />

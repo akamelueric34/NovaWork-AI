@@ -9,6 +9,8 @@ export const Route = createFileRoute("/research")({
       { name: "description", content: "Get summaries, key insights and recommendations on any topic or URL." },
       { property: "og:title", content: "AI Research Assistant — NovaWork AI" },
       { property: "og:description", content: "Summaries, insights and recommendations." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Page,
@@ -54,7 +56,7 @@ ${topic} is an area of growing importance for modern organizations. Current disc
             <input required value={topic} onChange={(e) => setTopic(e.target.value)} className={field}
               placeholder="e.g. Hybrid work best practices or https://..." />
           </div>
-          <GenerateButton loading={g.loading} />
+          <GenerateButton loading={g.loading}>Synthesize Research</GenerateButton>
         </form>
       }
     />
