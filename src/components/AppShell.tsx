@@ -1,19 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
-  LayoutDashboard, Mail, NotebookPen, CalendarCheck, Search, MessageSquare, Menu, X, Zap,
+  Mail, NotebookPen, Search, MessageSquare, Menu, X, Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const tools = [
   { to: "/email", label: "Smart Email Generator", short: "Email", icon: Mail, desc: "Draft polished workplace emails in any tone." },
   { to: "/meeting-notes", label: "Meeting Notes Summarizer", short: "Meeting Notes", icon: NotebookPen, desc: "Turn transcripts into decisions and action items." },
-  { to: "/planner", label: "AI Task Planner", short: "Task Planner", icon: CalendarCheck, desc: "Convert messy to-dos into a prioritized day." },
   { to: "/research", label: "AI Research Assistant", short: "Research", icon: Search, desc: "Summaries, insights and recommendations." },
-  { to: "/chat", label: "AI Chatbot", short: "Chatbot", icon: MessageSquare, desc: "Ask anything about your work." },
+  { to: "/chat", label: "Workplace Chat", short: "Workplace Chat", icon: MessageSquare, desc: "Get practical help with everyday workplace questions." },
 ] as const;
 
-const nav = [{ to: "/", label: "Dashboard", icon: LayoutDashboard }, ...tools];
+const nav = tools;
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -28,7 +27,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           className={`fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-sidebar-border bg-sidebar p-4 transition-transform md:static md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
         >
           <div className="mb-8 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+            <Link to="/email" className="flex items-center gap-2" onClick={() => setOpen(false)}>
               <span className="grid h-8 w-8 place-items-center rounded-md bg-brand text-primary-foreground shadow-glow">
                 <Zap className="h-5 w-5" />
               </span>
@@ -47,7 +46,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 activeProps={{ className: "bg-sidebar-accent !text-primary font-semibold" }}
               >
                 <n.icon className="h-4 w-4 shrink-0" />
-                <span className="truncate">{"short" in n ? n.short : n.label}</span>
+                <span className="truncate">{n.short}</span>
               </Link>
             ))}
           </nav>
