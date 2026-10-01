@@ -9,6 +9,8 @@ export const Route = createFileRoute("/planner")({
       { name: "description", content: "Turn an unstructured to-do list into a prioritized daily schedule." },
       { property: "og:title", content: "AI Task Planner — NovaWork AI" },
       { property: "og:description", content: "A prioritized daily schedule from your to-dos." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Page,
@@ -44,7 +46,7 @@ function Page() {
             <textarea rows={14} required value={text} onChange={(e) => setText(e.target.value)} className={field}
               placeholder={"finish Q3 report\ncall vendor about invoice\nreview PRs\nprep slides for Friday\ngym"} />
           </div>
-          <GenerateButton loading={g.loading} />
+          <GenerateButton loading={g.loading}>Organize My Day</GenerateButton>
         </form>
       }
     />

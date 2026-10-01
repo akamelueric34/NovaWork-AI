@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Bot, Copy, Check, Send, Loader2 } from "lucide-react";
 import { field } from "@/components/ToolLayout";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/chat")({
   head: () => ({
@@ -10,6 +12,8 @@ export const Route = createFileRoute("/chat")({
       { name: "description", content: "Chat with NovaWork AI about any workplace question." },
       { property: "og:title", content: "AI Chatbot — NovaWork AI" },
       { property: "og:description", content: "Your on-demand workplace assistant." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Chat,
@@ -23,6 +27,8 @@ const replies = [
   "For difficult conversations, try the SBI model: describe the Situation, the Behavior, and its Impact. Keep it factual and invite their perspective.",
   "I'd suggest keeping it concise: lead with the key point, add one or two supporting details, and close with a clear next step.",
 ];
+
+const suggestions = ["Proofread my text", "Suggest a meeting agenda", "Plan my priorities"];
 
 function Chat() {
   const [msgs, setMsgs] = useState<Msg[]>([
@@ -44,7 +50,7 @@ function Chat() {
     setInput("");
     setLoading(true);
     setTimeout(() => {
-      setMsgs((m) => [...m, { role: "ai", text: replies[Math.floor(Math.random() * replies.length)] ?? replies[0]! }]);
+      setMsgs((m) => [...m, { role: "ai", text: replies[Math.floor(Math.random() * replies.length)] ?? "How can I help with your work?" }]);
       setLoading(false);
     }, 1500);
   };
@@ -53,16 +59,16 @@ function Chat() {
     <div className="mx-auto flex h-full max-w-4xl flex-col p-4 sm:p-8">
       <h1 className="text-2xl font-bold sm:text-3xl">AI Chatbot</h1>
       <p className="mt-1 text-muted-foreground">Ask anything about your workday.</p>
-      <div className="mt-6 flex min-h-0 flex-1 flex-col rounded-xl border border-border bg-card">
+      <div className="mt-6 flex min-h-0 flex-1 flex-col rounded-lg border border-border bg-card">
         <div className="flex-1 space-y-5 overflow-y-auto p-4 sm:p-6">
           {msgs.map((m, i) =>
             m.role === "user" ? (
               <div key={i} className="flex justify-end">
-                <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground">{m.text}</div>
+                <div className="max-w-[85%] whitespace-pre-wrap rounded-lg rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground">{m.text}</div>
               </div>
             ) : (
               <div key={i} className="flex gap-3">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand text-primary-foreground"><Bot className="h-4 w-4" /></span>
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-secondary text-primary"><Bot className="h-4 w-4" /></span>
                 <div className="min-w-0 flex-1">
                   <textarea
                     value={m.text}
@@ -70,13 +76,15 @@ function Chat() {
                     rows={m.text.split("\n").length + 1}
                     className="w-full resize-none rounded-lg border border-transparent bg-transparent p-1 text-sm leading-relaxed outline-none hover:border-border focus:border-primary"
                   />
-                  <button
-                    onClick={() => { navigator.clipboard.writeText(m.text); setCopied(i); setTimeout(() => setCopied(null), 1500); }}
-                    className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary"
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 px-2 text-muted-foreground"
+                    onClick={() => { navigator.clipboard.writeText(m.text); setCopied(i); toast.success("Copied to clipboard"); setTimeout(() => setCopied(null), 1500); }}
                   >
                     {copied === i ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                     {copied === i ? "Copied" : "Copy to Clipboard"}
-                  </button>
+                  </Button>
                 </div>
               </div>
             ),
@@ -88,7 +96,14 @@ function Chat() {
           )}
           <div ref={end} />
         </div>
-        <form className="flex gap-2 border-t border-border p-3" onSubmit={(e) => { e.preventDefault(); send(); }}>
+        <div className="flex flex-wrap gap-2 border-t border-border px-3 pt-3">
+          {suggestions.map((suggestion) => (
+            <Button key={suggestion} variant="outline" size="sm" onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}>
+              {suggestion}
+            </Button>
+          ))}
+        </div>
+        <form className="flex gap-2 p-3" onSubmit={(e) => { e.preventDefault(); send(); }}>
           <textarea
             ref={inputRef}
             rows={1}
@@ -98,10 +113,9 @@ function Chat() {
             placeholder="Type your message..."
             className={`${field} resize-none`}
           />
-          <button type="submit" disabled={loading || !input.trim()} aria-label="Send"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-brand text-primary-foreground disabled:opacity-50">
+          <Button type="submit" disabled={loading || !input.trim()} aria-label="Send" size="icon" className="h-11 w-11 shrink-0">
             <Send className="h-4 w-4" />
-          </button>
+          </Button>
         </form>
       </div>
     </div>
