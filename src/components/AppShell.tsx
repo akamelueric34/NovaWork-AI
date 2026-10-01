@@ -1,14 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { type ReactNode } from "react";
 import {
-  Mail, NotebookPen, Search, MessageSquare, Zap,
+  Mail, NotebookPen, Search, Zap,
 } from "lucide-react";
 
 export const tools = [
   { to: "/email", label: "Smart Email Generator", short: "Email", icon: Mail, desc: "Draft polished workplace emails in any tone." },
   { to: "/meeting-notes", label: "Meeting Notes Summarizer", short: "Meeting Notes", icon: NotebookPen, desc: "Turn transcripts into decisions and action items." },
   { to: "/research", label: "AI Research Assistant", short: "Research", icon: Search, desc: "Summaries, insights and recommendations." },
-  { to: "/chat", label: "Workplace Chat", short: "Workplace Chat", icon: MessageSquare, desc: "Get practical help with everyday workplace questions." },
 ] as const;
 
 const nav = tools;
@@ -47,7 +46,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </aside>
         <div className="flex min-w-0 flex-1 flex-col">
           <main className="min-h-0 flex-1 overflow-y-auto pb-16 lg:pb-0">{children}</main>
-          <nav className="fixed inset-x-0 bottom-0 z-40 grid h-16 grid-cols-4 border-t border-border bg-sidebar/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden" aria-label="Tools">
+          <nav className="fixed inset-x-0 bottom-0 z-40 grid h-16 grid-cols-3 border-t border-border bg-sidebar/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden" aria-label="Tools">
             {nav.map((n) => (
               <Link
                 key={n.to}
