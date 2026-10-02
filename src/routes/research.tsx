@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ToolLayout, GenerateButton, useMockGenerate, field, label } from "@/components/ToolLayout";
+import { ToolLayout, GenerateButton, OptionCard, useMockGenerate, field, label, textAreaField } from "@/components/ToolLayout";
 
 export const Route = createFileRoute("/research")({
   head: () => ({
@@ -18,6 +18,8 @@ export const Route = createFileRoute("/research")({
 
 function Page() {
   const [topic, setTopic] = useState("");
+  const [depth, setDepth] = useState("Quick");
+  const [focus, setFocus] = useState("");
   const g = useMockGenerate();
   return (
     <ToolLayout
@@ -26,7 +28,7 @@ function Page() {
       {...g}
       form={
         <form
-          className="flex flex-col gap-4"
+          className="flex h-full flex-col gap-5"
           onSubmit={(e) => {
             e.preventDefault();
             g.run(
@@ -51,11 +53,12 @@ ${topic} is an area of growing importance for modern organizations. Current disc
             );
           }}
         >
-          <div>
-            <label className={label}>Topic or URL</label>
-            <input required value={topic} onChange={(e) => setTopic(e.target.value)} className={field}
+          <div className="grid gap-3 sm:grid-cols-2"><div>
+            <label className={label}>Topic or URL</label><input required value={topic} onChange={(e) => setTopic(e.target.value)} className={field}
               placeholder="e.g. Hybrid work best practices or https://..." />
-          </div>
+          </div><div><label className={label}>Research Focus</label><input value={focus} onChange={(e) => setFocus(e.target.value)} className={field} placeholder="e.g. Risks and trends" /></div></div>
+          <div><label className={label}>Depth</label><div className="grid grid-cols-3 gap-2">{[["Quick", "Top findings"], ["Focused", "Useful detail"], ["Deep", "Full brief"]].map(([title, description]) => <OptionCard key={title} title={title} description={description} selected={depth === title} onClick={() => setDepth(title)} />)}</div></div>
+          <div className="flex-1"><label className={label}>Context or Article Text</label><textarea value={focus} onChange={(e) => setFocus(e.target.value)} className={`${textAreaField} min-h-48`} placeholder="Add context, questions, or article text to guide the research..." /></div>
           <GenerateButton loading={g.loading}>Synthesize Research</GenerateButton>
         </form>
       }

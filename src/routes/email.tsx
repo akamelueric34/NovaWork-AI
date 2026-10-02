@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ToolLayout, GenerateButton, useMockGenerate, field, label } from "@/components/ToolLayout";
+import { ToolLayout, GenerateButton, OptionCard, useMockGenerate, field, label, textAreaField } from "@/components/ToolLayout";
 
 export const Route = createFileRoute("/email")({
   head: () => ({
@@ -24,6 +24,8 @@ const openers = {
 
 function EmailPage() {
   const [context, setContext] = useState("");
+  const [recipient, setRecipient] = useState("");
+  const [purpose, setPurpose] = useState("");
   const [tone, setTone] = useState<keyof typeof openers>("Formal");
   const g = useMockGenerate();
   return (
@@ -33,12 +35,12 @@ function EmailPage() {
       {...g}
       form={
         <form
-          className="flex flex-col gap-4"
+          className="flex h-full flex-col gap-5"
           onSubmit={(e) => {
             e.preventDefault();
             const [hi, intro, close, sign] = openers[tone];
             g.run(
-              () => `Subject: Update — ${context.slice(0, 50) || "Project Follow-up"}
+              () => `To: ${recipient || "Recipient"}\nSubject: ${purpose || context.slice(0, 50) || "Project Follow-up"}
 
 ${hi}
 
@@ -58,18 +60,17 @@ ${sign}
             );
           }}
         >
-          <div>
-            <label className={label}>Email Context</label>
-            <textarea rows={8} required value={context} onChange={(e) => setContext(e.target.value)} className={`${field} min-h-48 md:h-[calc(100dvh-24rem)] md:min-h-56`}
-              placeholder="e.g. Follow up with the client about the delayed Q3 deliverable and propose a new date." />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div><label className={label}>Recipient</label><input value={recipient} onChange={(e) => setRecipient(e.target.value)} className={field} placeholder="e.g. Project team" /></div>
+            <div><label className={label}>Purpose</label><input value={purpose} onChange={(e) => setPurpose(e.target.value)} className={field} placeholder="e.g. Project update" /></div>
           </div>
-          <div>
-            <label className={label}>Tone</label>
-            <select value={tone} onChange={(e) => setTone(e.target.value as keyof typeof openers)} className={field}>
-              <option>Formal</option>
-              <option>Friendly</option>
-              <option>Persuasive</option>
-            </select>
+          <div><label className={label}>Tone</label><div className="grid grid-cols-3 gap-2">
+            {(Object.keys(openers) as Array<keyof typeof openers>).map((option) => <OptionCard key={option} title={option} description={option === "Formal" ? "Clear and polished" : option === "Friendly" ? "Warm and natural" : "Confident and direct"} selected={tone === option} onClick={() => setTone(option)} />)}
+          </div></div>
+          <div className="flex-1">
+            <label className={label}>Email Brief</label>
+            <textarea rows={8} required value={context} onChange={(e) => setContext(e.target.value)} className={`${textAreaField} min-h-48 md:min-h-60`}
+              placeholder="e.g. Follow up with the client about the delayed Q3 deliverable and propose a new date." />
           </div>
           <GenerateButton loading={g.loading}>Generate Professional Draft</GenerateButton>
         </form>

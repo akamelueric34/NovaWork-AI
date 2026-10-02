@@ -1,27 +1,25 @@
 import { Link } from "@tanstack/react-router";
 import { type ReactNode } from "react";
 import {
-  Mail, NotebookPen, Search, Zap,
+  LayoutDashboard, Mail, MessageSquareText, NotebookPen, Search, ShieldAlert, Zap,
 } from "lucide-react";
 
 export const tools = [
+  { to: "/", label: "Dashboard", short: "Home", icon: LayoutDashboard, desc: "Open a productivity tool." },
   { to: "/email", label: "Smart Email Generator", short: "Email", icon: Mail, desc: "Draft polished workplace emails in any tone." },
   { to: "/meeting-notes", label: "Meeting Notes Summarizer", short: "Meeting Notes", icon: NotebookPen, desc: "Turn transcripts into decisions and action items." },
   { to: "/research", label: "AI Research Assistant", short: "Research", icon: Search, desc: "Summaries, insights and recommendations." },
+  { to: "/chat", label: "AI Chatbot", short: "Chat", icon: MessageSquareText, desc: "Get practical workplace guidance." },
 ] as const;
 
 const nav = tools;
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-dvh flex-col">
-      <div className="shrink-0 border-b border-border bg-warning px-3 py-1.5 text-center text-[10px] font-medium leading-tight text-warning-foreground sm:text-xs">
-        ⚠️ Responsible AI Guardrail: AI outputs are suggestions and require human review.
-      </div>
-      <div className="flex min-h-0 flex-1">
-        <aside className="hidden w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 lg:flex">
+    <div className="flex h-dvh">
+        <aside className="hidden w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 lg:flex">
           <div className="mb-8 flex items-center justify-between">
-            <Link to="/email" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <span className="grid h-8 w-8 place-items-center rounded-md bg-brand text-primary-foreground shadow-glow">
                 <Zap className="h-5 w-5" />
               </span>
@@ -42,11 +40,16 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Link>
             ))}
           </nav>
-          <p className="mt-auto text-xs text-muted-foreground">Simulated AI · No data leaves your browser</p>
+          <div className="mt-auto rounded-lg border border-warning/40 bg-warning/45 p-3 text-warning-foreground">
+            <div className="mb-1.5 flex items-center gap-2 text-xs font-bold uppercase">
+              <ShieldAlert className="h-4 w-4 shrink-0" /> Responsible AI
+            </div>
+            <p className="text-xs leading-relaxed">AI outputs are suggestions and require human review.</p>
+          </div>
         </aside>
         <div className="flex min-w-0 flex-1 flex-col">
           <main className="min-h-0 flex-1 overflow-y-auto pb-16 lg:pb-0">{children}</main>
-          <nav className="fixed inset-x-0 bottom-0 z-40 grid h-16 grid-cols-3 border-t border-border bg-sidebar/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden" aria-label="Tools">
+          <nav className="fixed inset-x-0 bottom-0 z-40 grid h-16 grid-cols-5 border-t border-border bg-sidebar/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden" aria-label="Tools">
             {nav.map((n) => (
               <Link
                 key={n.to}
@@ -61,7 +64,6 @@ export function AppShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
         </div>
-      </div>
     </div>
   );
 }
