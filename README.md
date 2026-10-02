@@ -23,10 +23,57 @@ The application integrates four core AI-powered productivity tools:
 *   **Version Control:** GitHub
 
 ## Setup Instructions
-1. Clone this repository to your local machine:
-`git clone [https://github.com/akamelueric34/NovaWork-AI.git](https://github.com/akamelueric34/NovaWork-AI.git)`
-3. Open the project folder in your preferred code editor.
-4. Run the application via a local development server (e.g., VS Code Live Server) or view the live deployed prototype here: `[https://novaworkai.lovable.app]`
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/akamelueric34/NovaWork-AI.git
+```
+
+### 2. Open the Project
+
+```bash
+cd NovaWork-AI
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Start the Development Server
+
+```bash
+npm run dev
+```
+
+### 5. Open the Application
+
+Open the local development URL displayed in your terminal, usually:
+
+```text
+http://localhost:5173
+```
+
+## Usage
+
+1. Open the application.
+2. Select a tool from the sidebar.
+3. Enter your information or question.
+4. Submit the request.
+5. Review the AI-generated response.
+
+---
+
+No account or registration is required.
+
+---
+
+## Project Purpose
+The purpose of this project is to demonstrate how AI can be integrated into a modern productivity application to assist professionals with everyday workplace activities such as meeting management, task planning, scheduling, and research.
+
+---
 
 ## Author
-*   Eric Chiedozie Akamelu
+**Eric Chiedozie Akamelu**  
