@@ -22,6 +22,11 @@ function Page() {
   const [focus, setFocus] = useState("");
   const [context, setContext] = useState("");
   const g = useMockGenerate();
+  const depthOptions = [
+    { title: "Quick", description: "Top findings" },
+    { title: "Focused", description: "Useful detail" },
+    { title: "Deep", description: "Full brief" },
+  ];
   return (
     <ToolLayout
       title="AI Research Assistant"
@@ -58,7 +63,7 @@ ${topic} is an area of growing importance for modern organizations. Current disc
             <label className={label}>Topic or URL</label><input required value={topic} onChange={(e) => setTopic(e.target.value)} className={field}
               placeholder="e.g. Hybrid work best practices or https://..." />
           </div><div><label className={label}>Research Focus</label><input value={focus} onChange={(e) => setFocus(e.target.value)} className={field} placeholder="e.g. Risks and trends" /></div></div>
-          <div><label className={label}>Depth</label><div className="grid grid-cols-3 gap-2">{[["Quick", "Top findings"], ["Focused", "Useful detail"], ["Deep", "Full brief"]].map(([title, description]) => <OptionCard key={title} title={title} description={description} selected={depth === title} onClick={() => setDepth(title)} />)}</div></div>
+          <div><label className={label}>Depth</label><div className="grid grid-cols-3 gap-2">{depthOptions.map((option) => <OptionCard key={option.title} title={option.title} description={option.description} selected={depth === option.title} onClick={() => setDepth(option.title)} />)}</div></div>
           <div className="flex-1"><label className={label}>Context or Article Text</label><textarea value={context} onChange={(e) => setContext(e.target.value)} className={`${textAreaField} min-h-48`} placeholder="Add context, questions, or article text to guide the research..." /></div>
           <GenerateButton loading={g.loading}>Synthesize Research</GenerateButton>
         </form>

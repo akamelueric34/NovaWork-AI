@@ -17,7 +17,7 @@ const nav = tools;
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-dvh">
-        <aside className="hidden w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 lg:flex">
+        <aside className="hidden w-72 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 lg:flex">
           <div className="mb-8 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <span className="grid h-8 w-8 place-items-center rounded-md bg-brand text-primary-foreground shadow-glow">
@@ -32,7 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 key={n.to}
                 to={n.to}
                 activeOptions={{ exact: true }}
-                className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
+                className="flex items-center gap-3 rounded-md px-3 py-2.5 text-xs text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground xl:text-sm"
                 activeProps={{ className: "bg-sidebar-accent !text-primary font-semibold" }}
               >
                 <n.icon className="h-4 w-4 shrink-0" />

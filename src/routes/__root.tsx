@@ -61,7 +61,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "NovaWork AI — Workplace Productivity Assistant" },
-      { name: "description", content: "AI tools for emails, meeting notes and research." },
+      { name: "description", content: "AI tools for emails, meeting notes, research, and workplace guidance." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
