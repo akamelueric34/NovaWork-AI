@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ToolLayout, GenerateButton, useMockGenerate, field, label } from "@/components/ToolLayout";
+import { ToolLayout, GenerateButton, useMockGenerate, field, label, textAreaField } from "@/components/ToolLayout";
 
 export const Route = createFileRoute("/meeting-notes")({
   head: () => ({
@@ -37,6 +37,8 @@ Date: ${new Date().toLocaleDateString()}
 
 function Page() {
   const [text, setText] = useState("");
+  const [meeting, setMeeting] = useState("");
+  const [participants, setParticipants] = useState("");
   const g = useMockGenerate();
   return (
     <ToolLayout
@@ -44,10 +46,14 @@ function Page() {
       description="Paste a raw transcript and get structured notes."
       {...g}
       form={
-        <form className="flex flex-col gap-4" onSubmit={(e) => { e.preventDefault(); g.run(() => mock); }}>
+        <form className="flex h-full flex-col gap-5" onSubmit={(e) => { e.preventDefault(); g.run(() => `${meeting ? `${meeting.toUpperCase()}\n${participants ? `Participants: ${participants}\n\n` : ""}` : ""}${mock}`); }}>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div><label className={label}>Meeting</label><input value={meeting} onChange={(e) => setMeeting(e.target.value)} className={field} placeholder="e.g. Weekly planning" /></div>
+            <div><label className={label}>Participants</label><input value={participants} onChange={(e) => setParticipants(e.target.value)} className={field} placeholder="e.g. Sarah, James" /></div>
+          </div>
           <div>
             <label className={label}>Raw Transcript</label>
-            <textarea rows={12} required value={text} onChange={(e) => setText(e.target.value)} className={`${field} min-h-56 md:h-[calc(100dvh-18rem)] md:max-h-[34rem]`}
+            <textarea rows={12} required value={text} onChange={(e) => setText(e.target.value)} className={`${textAreaField} min-h-64`}
               placeholder="Paste your meeting transcript here..." />
           </div>
           <GenerateButton loading={g.loading}>Extract Action Items</GenerateButton>

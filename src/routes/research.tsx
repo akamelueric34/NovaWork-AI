@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ToolLayout, GenerateButton, useMockGenerate, field, label } from "@/components/ToolLayout";
+import { ToolLayout, GenerateButton, OptionCard, useMockGenerate, field, label, textAreaField } from "@/components/ToolLayout";
 
 export const Route = createFileRoute("/research")({
   head: () => ({
@@ -18,7 +18,15 @@ export const Route = createFileRoute("/research")({
 
 function Page() {
   const [topic, setTopic] = useState("");
+  const [depth, setDepth] = useState("Quick");
+  const [focus, setFocus] = useState("");
+  const [context, setContext] = useState("");
   const g = useMockGenerate();
+  const depthOptions = [
+    { title: "Quick", description: "Top findings" },
+    { title: "Focused", description: "Useful detail" },
+    { title: "Deep", description: "Full brief" },
+  ];
   return (
     <ToolLayout
       title="AI Research Assistant"
@@ -26,11 +34,11 @@ function Page() {
       {...g}
       form={
         <form
-          className="flex flex-col gap-4"
+          className="flex h-full flex-col gap-5"
           onSubmit={(e) => {
             e.preventDefault();
             g.run(
-              () => `RESEARCH BRIEF: ${topic}
+              () => `RESEARCH BRIEF: ${topic}${focus ? `\nFocus: ${focus}` : ""}${context ? `\nContext reviewed: ${context.slice(0, 120)}` : ""}
 
 📄 SUMMARY
 ${topic} is an area of growing importance for modern organizations. Current discussion centres on improving efficiency, reducing costs, and managing risk while adapting to fast-changing market expectations. Adoption is accelerating, though maturity varies widely across industries.
@@ -51,11 +59,12 @@ ${topic} is an area of growing importance for modern organizations. Current disc
             );
           }}
         >
-          <div>
-            <label className={label}>Topic or URL</label>
-            <input required value={topic} onChange={(e) => setTopic(e.target.value)} className={field}
+          <div className="grid gap-3 sm:grid-cols-2"><div>
+            <label className={label}>Topic or URL</label><input required value={topic} onChange={(e) => setTopic(e.target.value)} className={field}
               placeholder="e.g. Hybrid work best practices or https://..." />
-          </div>
+          </div><div><label className={label}>Research Focus</label><input value={focus} onChange={(e) => setFocus(e.target.value)} className={field} placeholder="e.g. Risks and trends" /></div></div>
+          <div><label className={label}>Depth</label><div className="grid grid-cols-3 gap-2">{depthOptions.map((option) => <OptionCard key={option.title} title={option.title} description={option.description} selected={depth === option.title} onClick={() => setDepth(option.title)} />)}</div></div>
+          <div className="flex-1"><label className={label}>Context or Article Text</label><textarea value={context} onChange={(e) => setContext(e.target.value)} className={`${textAreaField} min-h-48`} placeholder="Add context, questions, or article text to guide the research..." /></div>
           <GenerateButton loading={g.loading}>Synthesize Research</GenerateButton>
         </form>
       }
