@@ -20,6 +20,7 @@ function Page() {
   const [topic, setTopic] = useState("");
   const [depth, setDepth] = useState("Quick");
   const [focus, setFocus] = useState("");
+  const [context, setContext] = useState("");
   const g = useMockGenerate();
   return (
     <ToolLayout
@@ -32,7 +33,7 @@ function Page() {
           onSubmit={(e) => {
             e.preventDefault();
             g.run(
-              () => `RESEARCH BRIEF: ${topic}
+              () => `RESEARCH BRIEF: ${topic}${focus ? `\nFocus: ${focus}` : ""}${context ? `\nContext reviewed: ${context.slice(0, 120)}` : ""}
 
 📄 SUMMARY
 ${topic} is an area of growing importance for modern organizations. Current discussion centres on improving efficiency, reducing costs, and managing risk while adapting to fast-changing market expectations. Adoption is accelerating, though maturity varies widely across industries.
@@ -58,7 +59,7 @@ ${topic} is an area of growing importance for modern organizations. Current disc
               placeholder="e.g. Hybrid work best practices or https://..." />
           </div><div><label className={label}>Research Focus</label><input value={focus} onChange={(e) => setFocus(e.target.value)} className={field} placeholder="e.g. Risks and trends" /></div></div>
           <div><label className={label}>Depth</label><div className="grid grid-cols-3 gap-2">{[["Quick", "Top findings"], ["Focused", "Useful detail"], ["Deep", "Full brief"]].map(([title, description]) => <OptionCard key={title} title={title} description={description} selected={depth === title} onClick={() => setDepth(title)} />)}</div></div>
-          <div className="flex-1"><label className={label}>Context or Article Text</label><textarea value={focus} onChange={(e) => setFocus(e.target.value)} className={`${textAreaField} min-h-48`} placeholder="Add context, questions, or article text to guide the research..." /></div>
+          <div className="flex-1"><label className={label}>Context or Article Text</label><textarea value={context} onChange={(e) => setContext(e.target.value)} className={`${textAreaField} min-h-48`} placeholder="Add context, questions, or article text to guide the research..." /></div>
           <GenerateButton loading={g.loading}>Synthesize Research</GenerateButton>
         </form>
       }

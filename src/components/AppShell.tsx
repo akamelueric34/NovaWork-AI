@@ -36,7 +36,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 activeProps={{ className: "bg-sidebar-accent !text-primary font-semibold" }}
               >
                 <n.icon className="h-4 w-4 shrink-0" />
-                <span className="truncate">{n.short}</span>
+                <span className="truncate">{n.label}</span>
               </Link>
             ))}
           </nav>

@@ -74,7 +74,7 @@ export function ToolLayout({
         <section className="rounded-xl border border-border/70 bg-card p-5 shadow-glow sm:p-6">{form}</section>
         <section className="flex min-h-[360px] flex-col rounded-xl border border-border/70 bg-card p-5 shadow-glow sm:min-h-[460px] sm:p-6">
           <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
-            <h2 className="min-w-0 truncate font-semibold">AI Output <span className="text-xs font-normal text-muted-foreground">(editable)</span></h2>
+            <h2 className="min-w-0 truncate font-semibold">Generated output <span className="text-xs font-normal text-muted-foreground">(editable)</span></h2>
             <Button
               variant="outline"
               size="sm"
